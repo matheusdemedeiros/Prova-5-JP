@@ -19,8 +19,10 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Contatos
 
         public string Cargo => cargo;
 
+        public string Nome => nome;
+
         #endregion
-        
+
         #region Construtor
 
         public Contato(string nome, string email, string telefone, string empresa, string cargo)
