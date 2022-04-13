@@ -1,4 +1,5 @@
 ﻿using Prova_5_JP.ConsoleApp.Compartilhado;
+using Prova_5_JP.ConsoleApp.Módulo_Contatos;
 using Prova_5_JP.ConsoleApp.Módulo_Tarefa;
 using System;
 
@@ -85,20 +86,23 @@ namespace Prova_5_JP.ConsoleApp
             else if (opcaoSelecionada == "4")
                 telaCadastroBasico.VisualizarRegistros("Tela");
 
-            //TelaGerenciamentoTarefa telaCadastroTarefa = telaCadastroBasico as TelaGerenciamentoTarefa;
+            TelaGerenciamentoContato telaGerenciamentoContato = telaCadastroBasico as TelaGerenciamentoContato;
 
-            //if (telaCadastroTarefa is null)
-            //    return;
+            if (telaGerenciamentoContato is null)
+                return;
+
+            if (opcaoSelecionada == "5")
+                telaGerenciamentoContato.VisualizarRegistrosAgrupadosPorCargo();
 
             //if (opcaoSelecionada == "5")
             //    telaCadastroTarefa.AdicionarItemNaTarefa();
 
             //else if (opcaoSelecionada == "6")
             //    telaCadastroTarefa.ConcluirItemDaTarefa();
-            
+
             //else if (opcaoSelecionada == "7")
             //    telaCadastroTarefa.VisualizarItensPendentesDaTarefa("tela");
-            
+
             //else if (opcaoSelecionada == "8")
             //    telaCadastroTarefa.VisualizarItensConcluidosDaTarefa();
 

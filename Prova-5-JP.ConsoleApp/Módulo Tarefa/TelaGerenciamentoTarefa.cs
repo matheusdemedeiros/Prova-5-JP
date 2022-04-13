@@ -13,11 +13,15 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 
         #endregion
 
+        #region Construtor
+        
         public TelaGerenciamentoTarefa(RepositorioTarefa repositorioTarefa, Notificador notificador) : base("Gerenciamento de Tarefas")
         {
             this.repositorioTarefa = repositorioTarefa;
             this.notificador = notificador;
         }
+
+        #endregion
 
         public override string MostrarOpcoes()
         {

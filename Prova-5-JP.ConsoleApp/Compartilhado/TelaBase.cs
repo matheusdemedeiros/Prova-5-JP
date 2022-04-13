@@ -15,11 +15,11 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
         {
             MostrarTitulo(Titulo);
 
-            Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Editar");
-            Console.WriteLine("Digite 3 para Excluir");
-            Console.WriteLine("Digite 4 para Visualizar");
-            Console.WriteLine("Digite s para Sair");
+            Console.WriteLine("\nDigite 1 para Inserir");
+            Console.WriteLine("\nDigite 2 para Editar");
+            Console.WriteLine("\nDigite 3 para Excluir");
+            Console.WriteLine("\nDigite 4 para Visualizar");
+            Console.WriteLine("\nDigite s para Sair");
             Console.Write("\nSua escolha: ");
 
             string opcao = Console.ReadLine();

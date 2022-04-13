@@ -1,16 +1,18 @@
 ﻿using Prova_5_JP.ConsoleApp.Compartilhado;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 {
     public class Item : EntidadeBase
     {
+        #region Atributos
+
         private readonly string descricao;
         private Status statusItem;
+
+        #endregion
+
+        #region Construtor
 
         public Item(string descricao)
         {
@@ -18,7 +20,15 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             statusItem = Status.pendente;
         }
 
+        #endregion
+
+        #region Propriedades
+
         public bool EstaPendente => statusItem == Status.pendente ? true : false;
+
+        #endregion
+
+        #region Métodos públicos
 
         public void Concluir()
         {
@@ -36,7 +46,6 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             return new ResultadoValidacao(erros);
         }
 
-
         public override string ToString()
         {
             return
@@ -44,5 +53,7 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
                 "\nDescrição: " + descricao +
                 "\nStatus: " + statusItem;
         }
+        
+        #endregion
     }
 }

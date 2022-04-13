@@ -1,4 +1,5 @@
 ﻿
+using Prova_5_JP.ConsoleApp.Módulo_Contatos;
 using Prova_5_JP.ConsoleApp.Módulo_Tarefa;
 using System;
 
@@ -12,12 +13,13 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
         private RepositorioTarefa repositorioTarefa;
 
         private TelaGerenciamentoTarefa telaGerenciamentoTarefa;
+
+        // Declaração de Contatos
+        private RepositorioContato repositorioContato;
+
+        private TelaGerenciamentoContato telaGerenciamentoContato;
+
         /*
-
-        // Declaração de Categorias
-        private IRepositorio<Categoria> repositorioCategoria;
-
-        private TelaCadastroCategoria telaCadastroCategoria;
 
         // Declaração de Revistas
         private IRepositorio<Revista> repositorioRevista;
@@ -41,6 +43,8 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
         public TelaMenuPrincipal(Notificador notificador)
         {
             repositorioTarefa = new RepositorioTarefa();
+            repositorioContato = new RepositorioContato();
+
             //repositorioCategoria = new RepositorioJson<Categoria>();
             //repositorioRevista = new RepositorioJson<Revista>();
             //repositorioAmigo = new RepositorioJson<Amigo>();
@@ -48,6 +52,8 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
             //repositorioReserva = new RepositorioJson<Reserva>();
 
             telaGerenciamentoTarefa = new TelaGerenciamentoTarefa(repositorioTarefa, notificador);
+            telaGerenciamentoContato = new TelaGerenciamentoContato(repositorioContato, notificador);
+
             //telaCadastroCategoria = new TelaCadastroCategoria(repositorioCategoria, notificador);
             //telaCadastroRevista = new TelaCadastroRevista(
             //    telaCadastroCategoria,
@@ -108,8 +114,8 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
             if (opcao == "1")
                 tela = telaGerenciamentoTarefa;
 
-            //else if (opcao == "2")
-            //   //tela = telaGerenciamentoContatos;
+            else if (opcao == "2")
+                tela = telaGerenciamentoContato;
 
             //else if (opcao == "3")
             //    //tela = telaGerenciametoCompromissos;

@@ -139,13 +139,13 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             List<string> erros = new List<string>();
 
             if (string.IsNullOrEmpty(titulo))
-                erros.Add("É necessário inserir um título para as tarefas!");
+                erros.Add("\nÉ necessário inserir um título para as tarefas!");
 
             if (dataCriacao.Date == new DateTime(1, 1, 1))
-                erros.Add("É necessário inserir uma data de criação válida para as tarefas!");
+                erros.Add("\nÉ necessário inserir uma data de criação válida para as tarefas!");
 
             if (prioridade == 0)
-                erros.Add("É necessário inserir uma prioridade válida (Alta, Normal ou Baixa) para as tarefas!");
+                erros.Add("\nÉ necessário inserir uma prioridade válida (Alta, Normal ou Baixa) para as tarefas!");
 
             return new ResultadoValidacao(erros);
         }

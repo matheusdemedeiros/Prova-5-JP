@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Prova_5_JP.ConsoleApp.Compartilhado
 {
     public class RepositorioBase<T> where T : EntidadeBase
     {
+        #region Atributos
+
         protected readonly List<T> registros;
 
         protected int contadorId;
+
+        #endregion
+
+        #region Construtor
 
         public RepositorioBase()
         {
             registros = new List<T>();
         }
+
+        #endregion
+
+        #region Métodos públicos
 
         public virtual string Inserir(T entidade)
         {
@@ -115,5 +124,7 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
                 
             return false;
         }
+        
+        #endregion
     }
 }
