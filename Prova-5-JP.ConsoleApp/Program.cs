@@ -23,12 +23,47 @@ namespace Prova_5_JP.ConsoleApp
                 if (telaSelecionada is ITelaCadastravel)
                     GerenciarCadastroBasico(telaSelecionada, opcaoSelecionada);
 
-                //else if (telaSelecionada is TelaCadastroEmprestimo)
-                //    GerenciarCadastroEmprestimos(telaSelecionada, opcaoSelecionada);
+                else if (telaSelecionada is TelaGerenciamentoTarefa)
+                    GerenciarCadastroTarefas(telaSelecionada, opcaoSelecionada);
 
                 //else if (telaSelecionada is TelaCadastroReserva)
                 //    GerenciarCadastroReservas(telaSelecionada, opcaoSelecionada);
             }
+        }
+
+        private static void GerenciarCadastroTarefas(TelaBase telaSelecionada, string opcaoSelecionada)
+        {
+            TelaGerenciamentoTarefa telaGerenciamentoTarefa = telaSelecionada as TelaGerenciamentoTarefa;
+
+            if (telaGerenciamentoTarefa is null)
+                return;
+
+            if (opcaoSelecionada == "1")
+                telaGerenciamentoTarefa.InserirRegistro();
+
+            else if (opcaoSelecionada == "2")
+                telaGerenciamentoTarefa.EditarRegistro();
+
+            else if (opcaoSelecionada == "3")
+                telaGerenciamentoTarefa.ExcluirRegistro();
+
+            else if (opcaoSelecionada == "4")
+                telaGerenciamentoTarefa.VisualizarTarefasPendentes("tela");
+
+            if (opcaoSelecionada == "5")
+                telaGerenciamentoTarefa.VisualizarTarefasConcluidas("tela");
+
+            else if (opcaoSelecionada == "6")
+                telaGerenciamentoTarefa.AdicionarItemNaTarefa();
+
+            else if (opcaoSelecionada == "7")
+                telaGerenciamentoTarefa.ConcluirItemDaTarefa();
+
+            else if (opcaoSelecionada == "8")
+                telaGerenciamentoTarefa.VisualizarItensPendentesDaTarefa("tela");
+
+            else if (opcaoSelecionada == "9")
+                telaGerenciamentoTarefa.VisualizarItensConcluidosDaTarefa();
         }
 
         public static void GerenciarCadastroBasico(TelaBase telaSelecionada, string opcaoSelecionada)
@@ -50,22 +85,22 @@ namespace Prova_5_JP.ConsoleApp
             else if (opcaoSelecionada == "4")
                 telaCadastroBasico.VisualizarRegistros("Tela");
 
-            TelaGerenciamentoTarefa telaCadastroTarefa = telaCadastroBasico as TelaGerenciamentoTarefa;
+            //TelaGerenciamentoTarefa telaCadastroTarefa = telaCadastroBasico as TelaGerenciamentoTarefa;
 
-            if (telaCadastroTarefa is null)
-                return;
+            //if (telaCadastroTarefa is null)
+            //    return;
 
-            if (opcaoSelecionada == "5")
-                telaCadastroTarefa.AdicionarItemNaTarefa();
+            //if (opcaoSelecionada == "5")
+            //    telaCadastroTarefa.AdicionarItemNaTarefa();
 
-            else if (opcaoSelecionada == "6")
-                telaCadastroTarefa.ConcluirItemDaTarefa();
+            //else if (opcaoSelecionada == "6")
+            //    telaCadastroTarefa.ConcluirItemDaTarefa();
             
-            else if (opcaoSelecionada == "7")
-                telaCadastroTarefa.VisualizarItensPendentesDaTarefa("tela");
+            //else if (opcaoSelecionada == "7")
+            //    telaCadastroTarefa.VisualizarItensPendentesDaTarefa("tela");
             
-            else if (opcaoSelecionada == "8")
-                telaCadastroTarefa.VisualizarItensConcluidosDaTarefa();
+            //else if (opcaoSelecionada == "8")
+            //    telaCadastroTarefa.VisualizarItensConcluidosDaTarefa();
 
         }
     }

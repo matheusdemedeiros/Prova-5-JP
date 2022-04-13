@@ -4,7 +4,7 @@ using Prova_5_JP.ConsoleApp.Compartilhado;
 
 namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 {
-    public class TelaGerenciamentoTarefa : TelaBase, ITelaCadastravel
+    public class TelaGerenciamentoTarefa : TelaBase
     {
         #region Atributos
 
@@ -23,15 +23,16 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
         {
             MostrarTitulo(Titulo);
 
-            Console.WriteLine("Digite 1 para Inserir tarefa");
-            Console.WriteLine("Digite 2 para Editar tarefa");
-            Console.WriteLine("Digite 3 para Excluir tarefa");
-            Console.WriteLine("Digite 4 para Visualizar Tarefas");
-            Console.WriteLine("Digite 5 para Adicionar um item em uma tarefa");
-            Console.WriteLine("Digite 6 para Concluir um item em uma tarefa");
-            Console.WriteLine("Digite 7 para Visualizar itens pendentes em uma tarefa");
-            Console.WriteLine("Digite 8 para Visualizar itens concluídos em uma tarefa");
-            Console.WriteLine("Digite s para Sair");
+            Console.WriteLine("\nDigite 1 para Inserir tarefa");
+            Console.WriteLine("\nDigite 2 para Editar tarefa");
+            Console.WriteLine("\nDigite 3 para Excluir tarefa");
+            Console.WriteLine("\nDigite 4 para Visualizar Tarefas pendentes");
+            Console.WriteLine("\nDigite 5 para Visualizar Tarefas concluídas");
+            Console.WriteLine("\nDigite 6 para Adicionar um item em uma tarefa");
+            Console.WriteLine("\nDigite 7 para Concluir um item em uma tarefa");
+            Console.WriteLine("\nDigite 8 para Visualizar itens pendentes em uma tarefa");
+            Console.WriteLine("\nDigite 9 para Visualizar itens concluídos em uma tarefa");
+            Console.WriteLine("\nDigite s para Sair");
             Console.Write("\nSua escolha: ");
 
             string opcao = Console.ReadLine();
@@ -91,9 +92,13 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 
             int idTarefa = ObterIdTarefa();
 
-            repositorioTarefa.Excluir(x => x.id == idTarefa);
-
-            notificador.ApresentarMensagem("Tarefa excluída com sucesso", TipoMensagem.Sucesso);
+            if (repositorioTarefa.SelecionarRegistro(idTarefa).StatusTarefa == Status.concluido)
+            {
+                repositorioTarefa.Excluir(x => x.id == idTarefa);
+                notificador.ApresentarMensagem("Tarefa excluída com sucesso!!", TipoMensagem.Sucesso);
+            }
+            else
+                notificador.ApresentarMensagem("Tarefa não excluída pois está pendente", TipoMensagem.Atencao);
         }
 
         public bool VisualizarRegistros(string tipo)
@@ -117,6 +122,48 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             return true;
         }
 
+        public bool VisualizarTarefasPendentes(string tipo)
+        {
+            if (tipo == "tela")
+                MostrarTitulo("Visualização de Tarefas Pendentes");
+
+            List<Tarefa> tarefasPendentes = repositorioTarefa.SelecionarTarefasPendentes();
+
+            if (tarefasPendentes.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhuma tarefa pendente.", TipoMensagem.Atencao);
+                return false;
+            }
+
+            foreach (Tarefa tarefa in tarefasPendentes)
+                Console.WriteLine(tarefa.ToString());
+
+            Console.ReadLine();
+
+            return true;
+        }
+
+        public bool VisualizarTarefasConcluidas(string tipo)
+        {
+            if (tipo == "tela")
+                MostrarTitulo("Visualização de Tarefas concluídas!!");
+
+            List<Tarefa> tarefasConcluidas = repositorioTarefa.SelecionarTarefasConcluidas();
+
+            if (tarefasConcluidas.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhuma tarefa concluída.", TipoMensagem.Atencao);
+                return false;
+            }
+
+            foreach (Tarefa tarefa in tarefasConcluidas)
+                Console.WriteLine(tarefa.ToString());
+
+            Console.ReadLine();
+
+            return true;
+        }
+
         #endregion
 
         #region Métodos de Item
@@ -125,9 +172,11 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
         {
             MostrarTitulo("Adicionando item na tarefa");
 
-            bool temTarefasCadastradas = VisualizarRegistros("Pesquisando");
+            Console.WriteLine("Estas são as tarefas pendentes!!\n");
 
-            if (temTarefasCadastradas == false)
+            bool temTarefasPendentes = VisualizarTarefasPendentes("Pesquisando");
+
+            if (temTarefasPendentes == false)
                 return;
 
             Tarefa tarefaSelecionada = ObtemTarefa();
@@ -159,9 +208,11 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
         {
             MostrarTitulo("Concluindo um item da tarefa");
 
-            bool temTarefasCadastradas = VisualizarRegistros("Pesquisando");
+            Console.WriteLine("Estas são as tarefas\n ");
 
-            if (temTarefasCadastradas == false)
+            bool temTarefasPendentes = VisualizarTarefasPendentes("Pesquisando");
+
+            if (temTarefasPendentes == false)
                 return;
 
             Tarefa tarefaSelecionada = ObtemTarefa();
@@ -171,9 +222,7 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 
             if (tarefaSelecionada.QuantidadeDeItensPendentes > 0)
             {
-                Console.Clear();
-
-                VisualizarItensPendentesDaTarefa("");
+                tarefaSelecionada.MostrarItensPendentes();
 
                 Console.Write("Informe o ID do item que deseja concluir: ");
                 int idSelecionado = int.Parse(Console.ReadLine());
@@ -200,9 +249,11 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             if (tipo == "tela")
                 MostrarTitulo("Visualizando itens pendentes da tarefa");
 
-            bool temTarefasCadastradas = VisualizarRegistros("Pesquisando");
+            Console.WriteLine("Estas são as tarefas pendentes!!\n");
 
-            if (temTarefasCadastradas == false)
+            bool temTarefasPendentes = VisualizarTarefasPendentes("Pesquisando");
+
+            if (temTarefasPendentes == false)
                 return;
 
             Tarefa tarefaSelecionada = ObtemTarefa();
@@ -272,23 +323,10 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             string tituloTarefa = Console.ReadLine();
 
             Console.Write("Digite a Prioridade da tarefa (3 para ALTA, 2 para NORMAL ou 1 para BAIXA): ");
-            string prioridade = "";
+            bool prioridadeValida = int.TryParse(Console.ReadLine(), out int prioridade);
 
-            switch (Console.ReadLine())
-            {
-                case "1":
-                    prioridade = "BAIXA";
-                    break;
-                case "2":
-                    prioridade = "NORMAL";
-                    break;
-                case "3":
-                    prioridade = "ALTA";
-                    break;
-                default:
-                    prioridade = "INVALIDO";
-                    break;
-            }
+            if (prioridadeValida == false)
+                prioridade = 0;
 
             Tarefa tarefa;
 

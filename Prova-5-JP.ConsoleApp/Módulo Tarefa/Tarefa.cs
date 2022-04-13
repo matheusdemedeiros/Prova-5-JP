@@ -4,13 +4,13 @@ using Prova_5_JP.ConsoleApp.Compartilhado;
 
 namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 {
-    public class Tarefa : EntidadeBase
+    public class Tarefa : EntidadeBase, IComparable<Tarefa>
     {
-
         #region Atributos
 
+        private static int contadorIdItem = 0;
         private readonly string titulo;
-        private readonly string prioridade;
+        private readonly int prioridade;
         private Status statusTarefa;
         private DateTime dataConclusao;
         public DateTime dataCriacao;
@@ -39,23 +39,47 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
                     return "Indeterminado";
             }
         }
-        
+
         public Status StatusTarefa { get => statusTarefa; }
+
+        public string PrioridadeTarefa
+        {
+            get
+            {
+                string retorno = "";
+                if (prioridade == 1)
+                    retorno = "Baixa";
+                else if (prioridade == 2)
+                    retorno = "Normal";
+                else if (prioridade == 3)
+                    retorno = "Alta";
+
+                return retorno;
+            }
+        }
 
         #endregion
 
-        public Tarefa(string tituloTarefa, string dataCriacao, string prioridade)
+        #region Construtores
+
+        public Tarefa(string tituloTarefa, string dataCriacao, int prioridade)
         {
             this.titulo = tituloTarefa;
             this.dataCriacao = DateTime.TryParse(dataCriacao, out DateTime data) ? data : new DateTime(1, 1, 1);
             this.prioridade = prioridade;
 
         }
-        public Tarefa(string tituloTarefa, string prioridade)
+
+        public Tarefa(string tituloTarefa, int prioridade)
         {
             this.titulo = tituloTarefa;
             this.prioridade = prioridade;
         }
+
+        #endregion
+
+        #region Métodos públicos
+
         public Item RetornarItemDaListaDePendentes(int id)
         {
             return itensPendentes.Find(x => x.id == id);
@@ -81,27 +105,33 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
         {
             AtualizarItensConcluidos();
 
-            if (PercentualConclusao == "100 %" && QuantidadeDeItensPendentes == 0 && QuantidadeDeItensPendentes > 0)
+            if (PercentualConclusao == "100,00 %" && QuantidadeDeItensPendentes == 0 && QuantidadeDeItensConcluidos > 0)
                 ConcluirTarefa();
         }
 
         public void AdicionarItem(Item item)
         {
+            item.id = ++contadorIdItem;
+
             itensPendentes.Add(item);
         }
 
-        public override string ToString()
+        public void MostrarItensPendentes()
         {
-            return
-            "ID: " + id + Environment.NewLine +
-            "Título: " + titulo + Environment.NewLine +
-            "Data de criação: " + dataCriacao.ToShortDateString() + Environment.NewLine +
-            "Data de conclusão: " + DataConclusao + Environment.NewLine +
-            "Prioridade: " + prioridade.ToString() + Environment.NewLine +
-            "QTD de itens: " + QuantidadeDeItensTotais + Environment.NewLine +
-            "QTD de itens pendentes: " + QuantidadeDeItensPendentes + Environment.NewLine +
-            "QTD de itens concluídos: " + QuantidadeDeItensConcluidos + Environment.NewLine +
-            "Percentual de conclusao: " + PercentualConclusao + Environment.NewLine;
+            foreach (Item item in itensPendentes)
+            {
+                Console.WriteLine(item);
+                Console.WriteLine();
+            }
+        }
+
+        public void MostrarItensConcluidos()
+        {
+            foreach (Item item in itensConcluidos)
+            {
+                Console.WriteLine(item);
+                Console.WriteLine();
+            }
         }
         
         public override ResultadoValidacao Validar()
@@ -114,29 +144,37 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             if (dataCriacao.Date == new DateTime(1, 1, 1))
                 erros.Add("É necessário inserir uma data de criação válida para as tarefas!");
 
-            if (prioridade == "INVALIDO")
-                erros.Add("É necessário inserir uma prioridade válida (alta, normal, baixa) para as tarefas!");
+            if (prioridade == 0)
+                erros.Add("É necessário inserir uma prioridade válida (Alta, Normal ou Baixa) para as tarefas!");
 
             return new ResultadoValidacao(erros);
         }
-
-        public void MostrarItensPendentes()
+        
+        public override string ToString()
         {
-            foreach (Item item in itensPendentes)
-            {
-                Console.WriteLine(item);
-                Console.WriteLine();
-            }
+            return
+            "ID: " + id + Environment.NewLine +
+            "Título: " + titulo + Environment.NewLine +
+            "Data de criação: " + dataCriacao.ToShortDateString() + Environment.NewLine +
+            "Data de conclusão: " + DataConclusao + Environment.NewLine +
+            "Prioridade: " + PrioridadeTarefa + Environment.NewLine +
+            "QTD de itens: " + QuantidadeDeItensTotais + Environment.NewLine +
+            "QTD de itens pendentes: " + QuantidadeDeItensPendentes + Environment.NewLine +
+            "QTD de itens concluídos: " + QuantidadeDeItensConcluidos + Environment.NewLine +
+            "Percentual de conclusao: " + PercentualConclusao + Environment.NewLine;
         }
         
-        public void MostrarItensConcluidos()
+        public int CompareTo(Tarefa other)
         {
-            foreach (Item item in itensConcluidos)
-            {
-                Console.WriteLine(item);
-                Console.WriteLine();
-            }
+            if (prioridade < other.prioridade)
+                return 1;
+            else if (prioridade > other.prioridade)
+                return -1;
+            else
+                return 0;
         }
+        
+        #endregion
 
         #region Métodos privados
 
@@ -146,7 +184,6 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
             statusTarefa = Status.concluido;
         }
 
-    
         #endregion
     }
 }
