@@ -31,7 +31,13 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
         {
             Console.Clear();
 
-            Console.WriteLine(titulo);
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine("\n\t" + titulo);
+
+            Console.ResetColor();
 
             Console.WriteLine();
         }

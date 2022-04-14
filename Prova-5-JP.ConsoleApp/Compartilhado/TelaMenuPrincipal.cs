@@ -1,12 +1,15 @@
 ﻿
 using Prova_5_JP.ConsoleApp.Módulo_Contatos;
 using Prova_5_JP.ConsoleApp.Módulo_Tarefa;
+using Prova_5_JP.ConsoleApp.Módulo_Compromissos;
 using System;
 
 namespace Prova_5_JP.ConsoleApp.Compartilhado
 {
     public class TelaMenuPrincipal
     {
+        #region Atributos
+
         private string opcaoSelecionada;
 
         // Declaração de Tarefas
@@ -19,82 +22,49 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
 
         private TelaGerenciamentoContato telaGerenciamentoContato;
 
-        /*
 
-        // Declaração de Revistas
-        private IRepositorio<Revista> repositorioRevista;
+        // Declaração de Compromissos
+        private RepositorioCompromisso repositorioCompromisso;
 
-        private TelaCadastroRevista telaCadastroRevista;
+        private TelaGerenciamentoCompromisso telaGerenciamentoCompromisso;
 
-        // Declaração de Amigos
-        private IRepositorio<Amigo> repositorioAmigo;
-        private TelaCadastroAmigo telaCadastroAmigo;
+        #endregion
 
-        // Declaração de Empréstimos
-        private IRepositorio<Emprestimo> repositorioEmprestimo;
+        #region Construtor
 
-        private TelaCadastroEmprestimo telaCadastroEmprestimo;
-
-        // Declaração de Reservas
-        private IRepositorio<Reserva> repositorioReserva;
-
-        private TelaCadastroReserva telaCadastroReserva;
-        */
         public TelaMenuPrincipal(Notificador notificador)
         {
             repositorioTarefa = new RepositorioTarefa();
             repositorioContato = new RepositorioContato();
-
-            //repositorioCategoria = new RepositorioJson<Categoria>();
-            //repositorioRevista = new RepositorioJson<Revista>();
-            //repositorioAmigo = new RepositorioJson<Amigo>();
-            //repositorioEmprestimo = new RepositorioJson<Emprestimo>();
-            //repositorioReserva = new RepositorioJson<Reserva>();
+            repositorioCompromisso = new RepositorioCompromisso();
 
             telaGerenciamentoTarefa = new TelaGerenciamentoTarefa(repositorioTarefa, notificador);
             telaGerenciamentoContato = new TelaGerenciamentoContato(repositorioContato, notificador);
-
-            //telaCadastroCategoria = new TelaCadastroCategoria(repositorioCategoria, notificador);
-            //telaCadastroRevista = new TelaCadastroRevista(
-            //    telaCadastroCategoria,
-            //    repositorioCategoria,
-            //    telaCadastroCaixa,
-            //    repositorioCaixa,
-            //    repositorioRevista,
-            //    notificador
-            //);
-
-            //    telaCadastroAmigo = new TelaCadastroAmigo(repositorioAmigo, notificador);
-
-            //    telaCadastroEmprestimo = new TelaCadastroEmprestimo(
-            //        notificador,
-            //        repositorioEmprestimo,
-            //        repositorioRevista,
-            //        repositorioAmigo,
-            //        telaCadastroRevista,
-            //        telaCadastroAmigo
-            //    );
-
-            //    telaCadastroReserva = new TelaCadastroReserva(
-            //        notificador,
-            //        repositorioReserva,
-            //        repositorioAmigo,
-            //        repositorioRevista,
-            //        telaCadastroAmigo,
-            //        telaCadastroRevista,
-            //        repositorioEmprestimo
-            //    );
+            telaGerenciamentoCompromisso = new TelaGerenciamentoCompromisso(notificador,
+                repositorioCompromisso,
+                repositorioContato,
+                telaGerenciamentoContato);
         }
+        
+        #endregion
+
+        #region Métodos públicos
 
         public string MostrarOpcoes()
         {
             Console.Clear();
 
-            Console.WriteLine("Prova 5 - JP");
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine("\n\tProva 5 - JP");
+
+            Console.ResetColor();
 
             Console.WriteLine();
 
-            Console.WriteLine("Digite 1 para Gerenciar Tarefas");
+            Console.WriteLine("\nDigite 1 para Gerenciar Tarefas");
             Console.WriteLine("\nDigite 2 para Gerenciar Contatos");
             Console.WriteLine("\nDigite 3 para Gerenciar Comprpmissos");
             Console.WriteLine("\nDigite s para sair");
@@ -117,10 +87,12 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
             else if (opcao == "2")
                 tela = telaGerenciamentoContato;
 
-            //else if (opcao == "3")
-            //    //tela = telaGerenciametoCompromissos;
+            else if (opcao == "3")
+                tela = telaGerenciamentoCompromisso;
 
             return tela;
         }
+        
+        #endregion
     }
 }

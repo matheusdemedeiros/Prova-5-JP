@@ -6,12 +6,22 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
 {
     public class ResultadoValidacao
     {
+        #region Atributos
+
+        private readonly List<string> _erros;
+
+        #endregion
+
+        #region Construtor
+
         public ResultadoValidacao(List<string> erros)
         {
             _erros = erros;
         }
 
-        private readonly List<string> _erros;
+        #endregion
+
+        #region Métodos públicos
 
         public StatusValidacao Status
         {
@@ -20,7 +30,6 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
                 return _erros.Count == 0 ? StatusValidacao.Ok : StatusValidacao.Erro;
             }
         }
-
 
         public override string ToString()
         {
@@ -34,5 +43,7 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
 
             return sb.ToString();
         }
+        
+        #endregion
     }
 }

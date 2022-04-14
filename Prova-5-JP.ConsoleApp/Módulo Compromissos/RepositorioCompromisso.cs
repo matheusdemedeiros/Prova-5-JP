@@ -1,9 +1,6 @@
 ﻿using Prova_5_JP.ConsoleApp.Compartilhado;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prova_5_JP.ConsoleApp.Módulo_Compromissos
 {
@@ -19,6 +16,17 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Compromissos
         public List<Compromisso> SelecionarCompromissosFuturos()
         {
             return registros.FindAll(x => x.Passou == false);
+        }
+
+        public List<Compromisso> SelecionarCompromissosDiarios()
+        {
+            return registros.FindAll(x => x.DataInicio.Date == DateTime.Today.Date);
+        }
+
+        public List<Compromisso> SelecionarCompromissosSemanais()
+        {
+            DiaDaSemana hoje = (DiaDaSemana)DateTime.Now.DayOfWeek;
+            return registros.FindAll(x => (DiaDaSemana)x.DataInicio.DayOfWeek >= (DiaDaSemana)hoje);
         }
 
         #endregion

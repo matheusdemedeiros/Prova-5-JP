@@ -9,8 +9,14 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
 {
     public class RepositorioJson<T> : ISerializavel<T>, IRepositorio<T> where T : EntidadeBase
     {
+        #region Propriedades
+
         public string Diretorio { get; init; }
         public string Arquivo { get; init; }
+
+        #endregion
+
+        #region Construtor
 
         public RepositorioJson()
         {
@@ -24,6 +30,10 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
             if (!File.Exists(Arquivo))
                 File.Create(Arquivo).Close();
         }
+
+        #endregion
+
+        #region Métodos públicos
 
         public string Inserir(T entidade)
         {
@@ -150,5 +160,7 @@ namespace Prova_5_JP.ConsoleApp.Compartilhado
 
             return JsonConvert.DeserializeObject<List<T>>(jsonString);
         }
+        
+        #endregion
     }
 }

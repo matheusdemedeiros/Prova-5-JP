@@ -87,18 +87,8 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Tarefa
 
         public void AtualizarItensConcluidos()
         {
-
             itensConcluidos.AddRange(itensPendentes.FindAll(x => !x.EstaPendente));
             itensPendentes.RemoveAll(x => !x.EstaPendente);
-
-            //foreach (Item item in itensPendentes)
-            //{
-            //    if (!item.EstaPendente)
-            //    {
-            //        itensConcluidos.Add(item);
-            //        itensPendentes.Remove(item);
-            //    }
-            //}
         }
 
         public void AtualizarTarefa()

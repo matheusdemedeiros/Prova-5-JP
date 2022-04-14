@@ -1,7 +1,7 @@
 ﻿using Prova_5_JP.ConsoleApp.Compartilhado;
+using Prova_5_JP.ConsoleApp.Módulo_Compromissos;
 using Prova_5_JP.ConsoleApp.Módulo_Contatos;
 using Prova_5_JP.ConsoleApp.Módulo_Tarefa;
-using System;
 
 namespace Prova_5_JP.ConsoleApp
 {
@@ -27,8 +27,8 @@ namespace Prova_5_JP.ConsoleApp
                 else if (telaSelecionada is TelaGerenciamentoTarefa)
                     GerenciarCadastroTarefas(telaSelecionada, opcaoSelecionada);
 
-                //else if (telaSelecionada is TelaCadastroReserva)
-                //    GerenciarCadastroReservas(telaSelecionada, opcaoSelecionada);
+                else if (telaSelecionada is TelaGerenciamentoCompromisso)
+                    GerenciarCadastroCompromisso(telaSelecionada, opcaoSelecionada);
             }
         }
 
@@ -67,6 +67,38 @@ namespace Prova_5_JP.ConsoleApp
                 telaGerenciamentoTarefa.VisualizarItensConcluidosDaTarefa();
         }
 
+        private static void GerenciarCadastroCompromisso(TelaBase telaSelecionada, string opcaoSelecionada)
+        {
+            TelaGerenciamentoCompromisso telaGerenciamentoCompromisso = telaSelecionada as TelaGerenciamentoCompromisso;
+
+            if (telaGerenciamentoCompromisso is null)
+                return;
+
+            if (opcaoSelecionada == "1")
+                telaGerenciamentoCompromisso.InserirRegistro();
+
+            else if (opcaoSelecionada == "2")
+                telaGerenciamentoCompromisso.EditarRegistro();
+
+            else if (opcaoSelecionada == "3")
+                telaGerenciamentoCompromisso.ExcluirRegistro();
+
+            else if (opcaoSelecionada == "4")
+                telaGerenciamentoCompromisso.VisualizarCompromissosPassados("tela");
+
+            if (opcaoSelecionada == "5")
+                telaGerenciamentoCompromisso.VisualizarCompromissosFuturos("tela");
+
+            else if (opcaoSelecionada == "6")
+                telaGerenciamentoCompromisso.VisualizarCompromissosPorPeriodo("tela");
+
+            else if (opcaoSelecionada == "7")
+                telaGerenciamentoCompromisso.VisualizarCompromissosSemanais("tela");
+
+            else if (opcaoSelecionada == "8")
+                telaGerenciamentoCompromisso.VisualizarCompromissosDiarios("tela");
+        }
+
         public static void GerenciarCadastroBasico(TelaBase telaSelecionada, string opcaoSelecionada)
         {
             ITelaCadastravel telaCadastroBasico = telaSelecionada as ITelaCadastravel;
@@ -93,18 +125,6 @@ namespace Prova_5_JP.ConsoleApp
 
             if (opcaoSelecionada == "5")
                 telaGerenciamentoContato.VisualizarRegistrosAgrupadosPorCargo();
-
-            //if (opcaoSelecionada == "5")
-            //    telaCadastroTarefa.AdicionarItemNaTarefa();
-
-            //else if (opcaoSelecionada == "6")
-            //    telaCadastroTarefa.ConcluirItemDaTarefa();
-
-            //else if (opcaoSelecionada == "7")
-            //    telaCadastroTarefa.VisualizarItensPendentesDaTarefa("tela");
-
-            //else if (opcaoSelecionada == "8")
-            //    telaCadastroTarefa.VisualizarItensConcluidosDaTarefa();
 
         }
     }

@@ -2,9 +2,6 @@
 using Prova_5_JP.ConsoleApp.Módulo_Contatos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prova_5_JP.ConsoleApp.Módulo_Compromissos
 {
@@ -22,14 +19,24 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Compromissos
 
         #region Propriedades
 
-        public bool Passou => horaTermino < DateTime.Now ? true : false;
+        public bool Passou => DataInicio < DateTime.Now ? true : false;
 
-        public string Periodo => "";
+        public DateTime DataInicio => horaInicio;
+
+        public DateTime HoraInicio => horaTermino;
 
         #endregion
 
+        #region Construtores
 
-        #region Construtor
+        public Compromisso(string assunto, string local, string horaInicio, string horaTermino, Contato contato)
+        {
+            this.assunto = assunto;
+            this.local = local;
+            this.horaInicio = DateTime.TryParse(horaInicio, out DateTime inicio) ? inicio : new DateTime(1, 1, 1);
+            this.horaTermino = DateTime.TryParse(horaTermino, out DateTime termino) ? termino : new DateTime(1, 1, 1);
+            this.contato = contato;
+        }
 
         public Compromisso(string assunto, string local, DateTime horaInicio, DateTime horaTermino, Contato contato)
         {
@@ -42,20 +49,17 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Compromissos
 
         #endregion
 
-
         #region Método públicos
 
         public override string ToString()
         {
             string retorno =
-                "Assunto" + assunto +
-                "\nLocal" + local +
+                "Assunto: " + assunto +
+                "\nLocal: " + local +
                 "\nData e o horário de início: " + horaInicio +
                 "\nHorário de término: " + horaTermino +
                 "\nContato: " + contato.Nome + "\n";
-            if (!Passou)
-                retorno += "Período: " + Periodo;
-
+        
             return retorno;
         }
 
@@ -69,8 +73,14 @@ namespace Prova_5_JP.ConsoleApp.Módulo_Compromissos
             if (string.IsNullOrEmpty(local))
                 erros.Add("\nÉ necessário inserir um local válido para os compromissos!");
 
-            //if (string.IsNullOrEmpty(cargo))
-            //    erros.Add("\nÉ necessário inserir um cargo válido para os contatos!");
+            if (horaInicio == new DateTime(1, 1, 1))
+                erros.Add("\nÉ necessário inserir uma data e hora de início válida para os compromissos!");
+            
+            if (horaTermino == new DateTime(1, 1, 1))
+                erros.Add("\nÉ necessário inserir um horário de término válido para os compromissos!");
+            
+            if (contato == null)
+                erros.Add("\nÉ necessário inserir um contato válido para os compromissos!");
 
             return new ResultadoValidacao(erros);
         }
